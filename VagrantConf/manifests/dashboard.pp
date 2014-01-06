@@ -62,7 +62,6 @@ pre-start exec env RAILS_ENV=production /usr/share/puppet-dashboard/script/delay
 
     class {'dashboard':
         dashboard_site => $fqdn,
-        dashboard_workers_start => 'no',
         dashboard_port => '3000',
         passenger      => true,
         require        => Host['dashboard.nacswildcats.dev'],
