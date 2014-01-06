@@ -49,6 +49,7 @@ And stop the puppetmaster service, then go back to your own computer:
 sudo service puppetmaster stop
 exit
 ``
+
 Then provision the machine again:
 
 ``vagrant provision master``
@@ -60,11 +61,9 @@ If you still get errors from Vagrant, just issue vagrant reload until they clear
 ## IP Addresses
 
 <table>
-<tr><th>Puppet Master</th><td>192.168.33.10</td></tr>
-<tr><th>Dashboard</th><td>192.168.33.11</td></tr>
-<tr><th>Munki</th><td>192.168.33.12</td></tr>
-<tr><th>PuppetDB</th><td>192.168.33.13</td></tr>
-<tr><th>Crypt</th><td>192.168.33.14</td></tr>
+<tr><th>Puppet Master</th><td>192.168.2.10</td></tr>
+<tr><th>Dashboard</th><td>192.168.2.11</td></tr>
+<tr><th>PuppetDB</th><td>192.168.2.12</td></tr>
 </table>
 
 #Usage
