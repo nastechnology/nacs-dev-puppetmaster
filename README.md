@@ -27,7 +27,7 @@ librarian-puppet install
 
 When starting the Vagrant VMs, there are some cross node dependencies, so they will need to be rebooted a few times to make sure the Puppet provisioner runs completely.
 
-``
+```
 cd ~/nacs-dev-puppetmaster
 # First boot, this will fail during provisioning the Master
 vagrant up
@@ -37,7 +37,7 @@ vagrant up
 vagrant reload
 # This will complete the configuration of the Master
 vagrant reload
-``
+```
 
 If you get errors about Apache not being able to start on port 8140, SSH into the Puppet Master VM:
 
