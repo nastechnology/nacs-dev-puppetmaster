@@ -1,0 +1,9 @@
+.DS_Store
+.vagrant
+puppet/.tmp
+puppet/.ruby-version
+VagrantConf/.tmp
+VagrantConf/modules
+puppet/.librarian/puppet/config
+
+VagrantConf/.librarian/puppet/config

@@ -3,7 +3,14 @@
 
 Vagrant.configure("2") do |config|
   config.vm.define :master do |master_config|
-
+    master_config.vm.provider "virtualbox" do |v|
+      # Advanced VM sizes - only enable if computer can handle it
+      v.customize ["modifyvm", :id, "--memory", "2048"]
+      v.customize ["modifyvm", :id, "--cpus", "2"]
+      # Base vm sizes
+      # v.customize ["modifyvm", :id, "--memory", "512"]
+      # v.customize ["modifyvm", :id, "--cpus", "1"]
+    end
       # All Vagrant configuration is done here. The most common configuration
       # options are documented and commented below. For a complete reference,
       # please see the online documentation at vagrantup.com.
@@ -30,11 +37,38 @@ Vagrant.configure("2") do |config|
       
       master_config.vm.provision :shell, :path => "puppet_master.sh"
       # Enable the Puppet provisioner
-      master_config.vm.provision :puppet, :module_path => "VagrantConf/modules", :manifests_path => "VagrantConf/manifests", :manifest_file  => "default.pp"
+      master_config.vm.provision :puppet, :module_path => "VagrantConf/modules", :manifests_path => "VagrantConf/manifests", :manifest_file  => "master.pp"
 
     master_config.vm.synced_folder "puppet/manifests", "/etc/puppet/manifests"
     master_config.vm.synced_folder "puppet/modules", "/etc/puppet/modules"
     master_config.vm.synced_folder "puppet/hieradata", "/etc/puppet/hieradata"
+  end
+
+  config.vm.define :dash do |dash|
+
+    dash.vm.hostname = "dashboard.nacswildcats.dev"
+
+    dash.vm.network :private_network, ip: "192.168.2.11"
+    dash.vm.provision :puppet, :module_path => "VagrantConf/modules", :manifests_path => "VagrantConf/manifests", :manifest_file  => "dashboard.pp", :working_directory => "/tmp/vagrant-puppet/manifests"
+
+    dash.vm.provider "virtualbox" do |v|
+      v.customize ["modifyvm", :id, "--memory", "512"]
+      v.customize ["modifyvm", :id, "--cpus", "1"]
+    end
+  end  
+
+  config.vm.define :db do |db|
+
+    db.vm.hostname = "puppetdb.grahamgilbert.dev"
+
+    db.vm.network :private_network, ip: "192.168.2.12"
+
+    db.vm.provision :puppet, :module_path => "VagrantConf/modules", :manifests_path => "VagrantConf/manifests", :manifest_file  => "db.pp", :working_directory => "/tmp/vagrant-puppet/manifests"
+   
+    db.vm.provider "virtualbox" do |v|
+      v.customize ["modifyvm", :id, "--memory", "512"]
+      v.customize ["modifyvm", :id, "--cpus", "1"]
+    end
   end
   
   
