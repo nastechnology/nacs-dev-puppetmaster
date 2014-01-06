@@ -40,7 +40,12 @@ Vagrant.configure("2") do |config|
     # folder, and the third is the path on the host to the actual folder.
       
     # Enable the Puppet provisioner
-    master_config.vm.provision :puppet, :module_path => "VagrantConf/modules", :manifests_path => "VagrantConf/manifests", :manifest_file  => "master.pp"
+    master_config.vm.provision "puppet" do |puppet| 
+      puppet.module_path = "VagrantConf/modules"
+      puppet.manifests_path = "VagrantConf/manifests" 
+      puppet.manifest_file  = "master.pp"
+      #:working_directory => "/tmp/vagrant-puppet/manifests
+    end
 
     master_config.vm.synced_folder "puppet/manifests", "/etc/puppet/manifests"
     master_config.vm.synced_folder "puppet/modules", "/etc/puppet/modules"
@@ -50,9 +55,14 @@ Vagrant.configure("2") do |config|
   config.vm.define :dash do |dash|
 
     dash.vm.hostname = "dashboard.nacswildcats.dev"
-
     dash.vm.network "private_network", ip: "192.168.2.11"
-    dash.vm.provision :puppet, :module_path => "VagrantConf/modules", :manifests_path => "VagrantConf/manifests", :manifest_file  => "dashboard.pp", :working_directory => "/tmp/vagrant-puppet/manifests"
+
+    dash.vm.provision "puppet" do |puppet|
+      puppet.module_path = "VagrantConf/modules" 
+      puppet.manifests_path = "VagrantConf/manifests" 
+      puppet.manifest_file  = "dashboard.pp"
+      #:working_directory => "/tmp/vagrant-puppet/manifests"
+    end
 
     dash.vm.provider "virtualbox" do |v|
       v.customize ["modifyvm", :id, "--memory", "512"]
@@ -63,10 +73,14 @@ Vagrant.configure("2") do |config|
   config.vm.define :db do |db|
 
     db.vm.hostname = "puppetdb.nacswildcats.dev"
-
     db.vm.network "private_network", ip: "192.168.2.12"
 
-    db.vm.provision :puppet, :module_path => "VagrantConf/modules", :manifests_path => "VagrantConf/manifests", :manifest_file  => "db.pp", :working_directory => "/tmp/vagrant-puppet/manifests"
+    db.vm.provision "puppet" do |puppet| 
+      puppet.module_path = "VagrantConf/modules"
+      puppet.manifests_path = "VagrantConf/manifests"
+      puppet.manifest_file  = "db.pp"
+      # :working_directory => "/tmp/vagrant-puppet/manifests"
+    end
    
     db.vm.provider "virtualbox" do |v|
       v.customize ["modifyvm", :id, "--memory", "512"]
