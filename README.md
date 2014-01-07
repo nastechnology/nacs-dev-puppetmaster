@@ -59,6 +59,8 @@ This will leave you with a fully operational Puppet setup to cut your teeth on.
 
 The ``nacs-dev-puppetmaster/puppet`` directory is linked to ``/etc/puppet`` on your Puppet Master. You should put your classes in the ``puppet/classes`` directory and your modules in the ``puppet/modules`` directory.
 
+After the windows box boots up you will need to run the ``C:\vagrant\firstboot.bat`` from the command prompt.
+
 #What's next?
 
 You can use the manifests in ``VagrantConf/manifests`` to stand up your own Puppet sever setup. Take a look at the Vagrantfile to see what's happening to each VM, adjust the IP addresses and host names in the manifests to match your own environment and you're good to go.
