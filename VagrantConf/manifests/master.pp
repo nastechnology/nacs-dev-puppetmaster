@@ -9,38 +9,12 @@ node default {
     target       => '/etc/hosts',
   }
 
-  
-  package {'puppetmaster':
-    ensure  =>  latest,
-    require => Host['puppet.nacswildcats.dev'],
-  }
-    
-  # Configure puppetdb and its underlying database
-  class { 'puppetdb': 
-    listen_address => '0.0.0.0',
-    open_listen_port => true,
-    require => Package['puppetmaster'],
-    puppetdb_version => latest,
-  }
-
-  # Configure the puppet master to use puppetdb
-  class { 'puppetdb::master::config': }
-    
-  class {'dashboard':
-    dashboard_site => $fqdn,
-    dashboard_port => '3000',
-    mysql_root_pw  => 'new*data',
-    require        => Package["puppetmaster"],
-  }
- 
-  ##we copy rather than symlinking as puppet will manage this
-  file {'/etc/puppet/puppet.conf':
-    ensure => present,
-    owner => root,
-    group => root,
-    source => "/vagrant/puppet/puppet.conf",
-    notify  =>  [Service['puppetmaster'],Service['puppet-dashboard'],Service['puppet-dashboard-workers']],
-    require => Package['puppetmaster'],
+  ini_setting { "puppetmaster_dns_alt_names":
+    path    => '/etc/puppet/puppet.conf',
+    section => 'master',
+    setting => 'dns_alt_names',
+    value   => 'puppet, puppet.local, puppet.nacswildcats.dev',
+    ensure  => present,
   }
     
   file {'/etc/puppet/autosign.conf':
@@ -48,8 +22,6 @@ node default {
     owner => root,
     group => root,
     source => "/vagrant/puppet/autosign.conf",
-    notify  =>  [Service['puppetmaster'],Service['puppet-dashboard'],Service['puppet-dashboard-workers']],
-    require => Package['puppetmaster'],
   }
   
   file {'/etc/puppet/auth.conf':
@@ -57,8 +29,6 @@ node default {
     owner => root,
     group => root,
     source => "/vagrant/puppet/auth.conf",
-    notify  =>  [Service['puppetmaster'],Service['puppet-dashboard'],Service['puppet-dashboard-workers']],
-    require => Package['puppetmaster'],
   }
   
   file {'/etc/puppet/fileserver.conf':
@@ -66,8 +36,6 @@ node default {
     owner => root,
     group => root,
     source => "/vagrant/puppet/fileserver.conf",
-    notify  =>  [Service['puppetmaster'],Service['puppet-dashboard'],Service['puppet-dashboard-workers']],
-    require => Package['puppetmaster'],
   }
   
   file {'/etc/puppet/modules':
