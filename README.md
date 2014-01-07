@@ -53,13 +53,14 @@ This will leave you with a fully operational Puppet setup to cut your teeth on.
 
 <table>
 <tr><th>Puppet Master</th><td>192.168.2.10</td></tr>
+<tr><th>Windows Node</th><td>192.168.2.100</td></tr>
 </table>
 
 #Usage
 
 The ``nacs-dev-puppetmaster/puppet`` directory is linked to ``/etc/puppet`` on your Puppet Master. You should put your classes in the ``puppet/classes`` directory and your modules in the ``puppet/modules`` directory.
 
-After the windows box boots up you will need to run the ``C:\vagrant\firstboot.bat`` from the command prompt.
+After the windows box boots up you will need to run the ``C:\vagrant\firstboot.bat`` from the command prompt.  The ``firstboot.bat`` installs chocolatey and puppet and sets the Servername to ``puppet.nacswildcats.dev`` and the certname to ``xp.nas.dev``.
 
 #What's next?
 

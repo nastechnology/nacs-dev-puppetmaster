@@ -32,7 +32,7 @@ $webClient.DownloadFile($MsiUrl, $downloadPath)
 
 # Install it
 Write-Host "Installing Puppet..."
-$install_args = @("/qn", "/i", $downloadPath, "PUPPET_MASTER_SERVER=puppet.nacswildcats.dev")
+$install_args = @("/qn", "/i", $downloadPath, "PUPPET_MASTER_SERVER=puppet.nacswildcats.dev", "PUPPET_AGENT_CERTNAME=xp.nas.dev")
 $process = Start-Process -FilePath msiexec.exe -ArgumentList $install_args -Wait -PassThru
 if ($process.ExitCode -ne 0) {
     Write-Host "Installer failed."
