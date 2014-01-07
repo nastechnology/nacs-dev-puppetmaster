@@ -21,8 +21,10 @@ You will also need to install the librarian-puppet gem to install the needed mod
 First you need to download the required Puppet modules - thankfully librarian-puppet will do that for you. 
 
 ``
-cd  ~/nacs-dev-puppetmaster/VagrantConf
+cd ~/nacs-dev-puppetmaster/VagrantConf
 librarian-puppet install
+cd ../puppet
+librarian-puppet install 
 ``
 
 When starting the Vagrant VMs, there are some cross node dependencies, so they will need to be rebooted a few times to make sure the Puppet provisioner runs completely.

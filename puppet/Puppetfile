@@ -7,8 +7,6 @@ forge "http://forge.puppetlabs.com"
  mod 'puppetlabs/vcsrepo'
  mod 'puppetlabs/ntp'
  mod 'puppetlabs/inifile', '1.0.0'
- mod 'puppetlabs/postgresql'
- mod 'puppetlabs/puppetdb'
 
  mod 'mosen/cups'
  mod 'joshcooper/powershell'
@@ -17,7 +15,6 @@ forge "http://forge.puppetlabs.com"
  mod 'rcoleman/mac_profiles_handler'
  mod 'glarizza/property_list_key'
  mod 'badgerious/windows_env'
- mod 'hunner/wordpress'
 
  mod 'chocolatey',
    :git => 'https://github.com/chocolatey/puppet-chocolatey.git'
