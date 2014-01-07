@@ -14,7 +14,7 @@ node default {
   }
 
   service { 'puppetmaster':
-    ensure => stopped,
+    ensure => running,
   }
 
   ini_setting { "puppetmaster_dns_alt_names":

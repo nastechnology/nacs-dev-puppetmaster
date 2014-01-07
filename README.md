@@ -11,6 +11,13 @@ You will need the following packages installed to work with this:
 * [VirtualBox](http://www.virtualbox.org)
 * [Puppet](http://www.puppetlabs.com)
 * Ruby - If using any variance of *nix or Mac OS X this will be installd
+* [Vagrant-Windows](https://github.com/WinRB/vagrant-windows) 
+
+To work with Windows boxes and vagrant you will need to install the Vagrant-Windows plugin using the command below:
+
+``vagrant plugin install vagrant-windows``
+
+**You must have vagrant installed first**
 
 You will also need to install the librarian-puppet gem to install the needed modules for the puppet master.  If you are running Mac OS X Mavericks I would install the puppet gem.
 

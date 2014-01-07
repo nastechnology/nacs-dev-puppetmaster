@@ -1,3 +1,4 @@
+import 'winbasenode.pp'
 import 'test.pp'
 
 if $operatingsystem == 'windows' {

@@ -14,7 +14,7 @@ forge "http://forge.puppetlabs.com"
  #mod 'grahamgilbert/mac_facts'
  #mod 'rcoleman/mac_profiles_handler'
  #mod 'glarizza/property_list_key'
- #mod 'badgerious/windows_env'
+ mod 'badgerious/windows_env'
 
  mod 'chocolatey',
    :git => 'https://github.com/chocolatey/puppet-chocolatey.git'

@@ -45,3 +45,5 @@ Start-Sleep -s 5
 Stop-Service -Name puppet
 
 Write-Host "Puppet successfully installed."
+
+Break

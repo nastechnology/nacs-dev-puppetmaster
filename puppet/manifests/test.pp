@@ -1,3 +1,3 @@
-node 'xp.nacswildcats.dev' import winbasenode {
+node 'xp.nas.dev' inherits 'winbasenode' {
 
 }
