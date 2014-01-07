@@ -1,133 +1,78 @@
-class host_conf {
-    host { 'puppet.nacswildcats.dev':
-      ensure       => 'present',
-      host_aliases => ['puppet'],
-      ip           => '192.168.2.10',
-      target       => '/etc/hosts',
-    }
+#Quick Manifest to stand up a demo Puppet Master
 
-    host { 'dashboard.nacswildcats.dev':
-      ensure       => 'present',
-      host_aliases => ['dashboard'],
-      ip           => '192.168.2.11',
-      target       => '/etc/hosts',
-    }
+node default {
+  
+  host { 'puppet.nacswildcats.dev':
+    ensure       => 'present',
+    host_aliases => ['puppet'],
+    ip           => '192.168.2.10',
+    target       => '/etc/hosts',
+  }
+
+  
+  package {'puppetmaster':
+    ensure  =>  latest,
+    require => Host['puppet.nacswildcats.dev'],
+  }
     
-    host { 'puppetdb.nacswildcats.dev':
-      ensure       => 'present',
-      host_aliases => ['puppetdb'],
-      ip           => '192.168.2.12',
-      target       => '/etc/hosts',
-    }
-}
-
-#Quick Manifest to stand up a dev Puppet Master
-node 'puppet.nacswildcats.dev' {
-  include host_conf
-
-  package { 'puppetmaster-passenger': 
-     ensure => installed, 
-     require => Class['host_conf'],
-     before  => [Class['puppetdb::master::config'],Class['puppetdb::server']],
+  # Configure puppetdb and its underlying database
+  class { 'puppetdb': 
+    listen_address => '0.0.0.0',
+    open_listen_port => true,
+    require => Package['puppetmaster'],
+    puppetdb_version => latest,
   }
 
-  service {'apache2':
-    ensure  => 'running',
-    require => Class['puppetmaster'],
+  # Configure the puppet master to use puppetdb
+  class { 'puppetdb::master::config': }
+    
+  class {'dashboard':
+    dashboard_site => $fqdn,
+    dashboard_port => '3000',
+    mysql_root_pw  => 'new*data',
+    require        => Package["puppetmaster"],
   }
-
-  package {'puppet-dashboard':
-    ensure => installed,
+ 
+  ##we copy rather than symlinking as puppet will manage this
+  file {'/etc/puppet/puppet.conf':
+    ensure => present,
+    owner => root,
+    group => root,
+    source => "/vagrant/puppet/puppet.conf",
+    notify  =>  [Service['puppetmaster'],Service['puppet-dashboard'],Service['puppet-dashboard-workers']],
+    require => Package['puppetmaster'],
   }
-
-  class { puppetmaster:
-    puppetmaster_service_ensure => 'stopped',
-    puppetmaster_service_enable => 'false',
-    puppetmaster_report         => 'true',
-    puppetmaster_autosign       => 'true',
-    require                     => Class['host_conf'],
+    
+  file {'/etc/puppet/autosign.conf':
+    ensure => link,
+    owner => root,
+    group => root,
+    source => "/vagrant/puppet/autosign.conf",
+    notify  =>  [Service['puppetmaster'],Service['puppet-dashboard'],Service['puppet-dashboard-workers']],
+    require => Package['puppetmaster'],
   }
-
-  class { 'puppetdb::server':
-    database_host => 'puppetdb.grahamgilbert.dev',
-    require       => [Package['puppetmaster-passenger'],Class['host_conf']],
-  }
-
-  class { 'puppetdb::master::config':
-  }
-
-  ini_setting { "puppetmaster_dns_alt_names":
-    path    => '/etc/puppet/puppet.conf',
-    section => 'master',
-    setting => 'dns_alt_names',
-    value   => 'puppet, puppet.local, puppet.nacswildcats.dev',
-    ensure  => present,
-    before  => Class['puppetmaster'],
-  }
-
-  ini_setting { "puppetmaster_reports":
-    path    => '/etc/puppet/puppet.conf',
-    section => 'master',
-    setting => 'reports',
-    value   => 'store, http, puppetdb',
-    ensure  => present,
-    before  => Class['puppetmaster'],
-  }
-
-  ini_setting { "puppetmaster_reporturl":
-    path    => '/etc/puppet/puppet.conf',
-    section => 'master',
-    setting => 'reporturl',
-    value   => 'http://dashboard.nacswildcats.dev:3000/reports/upload',
-    ensure  => present,
-    before  => Class['puppetmaster'],
-  }
-
-  ini_setting { "puppetmaster_node_terminus":
-    path    => '/etc/puppet/puppet.conf',
-    section => 'master',
-    setting => 'node_terminus',
-    value   => 'exec',
-    ensure  => present,
-    before  => Class['puppetmaster'],
-  }
-
-  ini_setting { "puppetmaster_external_nodes":
-    path    => '/etc/puppet/puppet.conf',
-    section => 'master',
-    setting => 'external_nodes',
-    value   => '/usr/bin/env PUPPET_DASHBOARD_URL=http://dashboard.nacswildcats.dev:3000 /usr/share/puppet-dashboard/bin/external_node',
-    ensure  => present,
-    before  => Class['puppetmaster'],
-  }
-
-  ini_setting { "puppetmaster_storeconfigs":
-    path    => '/etc/puppet/puppet.conf',
-    section => 'master',
-    setting => 'storeconfigs',
-    value   => 'true',
-    ensure  => present,
-  }
-
-  ini_setting { "puppetmaster_storeconfigs_backend":
-    path    => '/etc/puppet/puppet.conf',
-    section => 'master',
-    setting => 'storeconfigs_backend',
-    value   => 'puppetdb',
-    ensure  => present,
-  }
-
+  
   file {'/etc/puppet/auth.conf':
     ensure => link,
     owner => root,
     group => root,
     source => "/vagrant/puppet/auth.conf",
+    notify  =>  [Service['puppetmaster'],Service['puppet-dashboard'],Service['puppet-dashboard-workers']],
+    require => Package['puppetmaster'],
   }
-
+  
   file {'/etc/puppet/fileserver.conf':
     ensure => link,
     owner => root,
     group => root,
     source => "/vagrant/puppet/fileserver.conf",
+    notify  =>  [Service['puppetmaster'],Service['puppet-dashboard'],Service['puppet-dashboard-workers']],
+    require => Package['puppetmaster'],
   }
+  
+  file {'/etc/puppet/modules':
+    mode  => '0644',
+    recurse => true,
+  }
+  
 }

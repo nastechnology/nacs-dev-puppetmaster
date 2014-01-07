@@ -49,44 +49,6 @@ Vagrant.configure("2") do |config|
 
     master_config.vm.synced_folder "puppet/manifests", "/etc/puppet/manifests"
     master_config.vm.synced_folder "puppet/modules", "/etc/puppet/modules"
-    master_config.vm.synced_folder "puppet/hieradata", "/etc/puppet/hieradata"
   end
-
-  config.vm.define :dash do |dash|
-
-    dash.vm.hostname = "dashboard.nacswildcats.dev"
-    dash.vm.network "private_network", ip: "192.168.2.11"
-
-    dash.vm.provision "puppet" do |puppet|
-      puppet.module_path = "VagrantConf/modules" 
-      puppet.manifests_path = "VagrantConf/manifests" 
-      puppet.manifest_file  = "dashboard.pp"
-      #:working_directory => "/tmp/vagrant-puppet/manifests"
-    end
-
-    dash.vm.provider "virtualbox" do |v|
-      v.customize ["modifyvm", :id, "--memory", "512"]
-      v.customize ["modifyvm", :id, "--cpus", "1"]
-    end
-  end  
-
-  config.vm.define :db do |db|
-
-    db.vm.hostname = "puppetdb.nacswildcats.dev"
-    db.vm.network "private_network", ip: "192.168.2.12"
-
-    db.vm.provision "puppet" do |puppet| 
-      puppet.module_path = "VagrantConf/modules"
-      puppet.manifests_path = "VagrantConf/manifests"
-      puppet.manifest_file  = "db.pp"
-      # :working_directory => "/tmp/vagrant-puppet/manifests"
-    end
-   
-    db.vm.provider "virtualbox" do |v|
-      v.customize ["modifyvm", :id, "--memory", "512"]
-      v.customize ["modifyvm", :id, "--cpus", "1"]
-    end
-  end
-  
   
 end
