@@ -7,4 +7,4 @@ netsh interface ip set address name="Local Area Connection 2" source=static addr
 
 ping -n 20 -w 1 127.0.0.1>nul
 
-del /F puppet-3.4.2.msi
+del /F C:\vagrant\puppet-3.4.2.msi
