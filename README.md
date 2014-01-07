@@ -2,8 +2,6 @@
 
 Vagrant Puppet Dev Environment for testing NACS Modules
 
-**** NOT WORKING CURRENTLY ******
-
 
 ## Before you begin
 
@@ -31,14 +29,7 @@ When starting the Vagrant VMs, there are some cross node dependencies, so they w
 
 ```
 cd ~/nacs-dev-puppetmaster
-# First boot, this will fail during provisioning the Master
 vagrant up
-# This will boot the rest of the VMs
-vagrant up
-# This will reboot the VMs for the first time
-vagrant reload
-# This will complete the configuration of the Master
-vagrant reload
 ```
 
 If you get errors about Apache not being able to start on port 8140, SSH into the Puppet Master VM:
@@ -58,21 +49,15 @@ Then provision the machine again:
 
 This will leave you with a fully operational Puppet setup to cut your teeth on.
 
-If you still get errors from Vagrant, just issue vagrant reload until they clear up. This is just an issue with the various parts being exchanged between the Puppet Master and PuppetDB servers during initial configuration. This only needs to be done once.
-
 ## IP Addresses
 
 <table>
 <tr><th>Puppet Master</th><td>192.168.2.10</td></tr>
-<tr><th>Dashboard</th><td>192.168.2.11</td></tr>
-<tr><th>PuppetDB</th><td>192.168.2.12</td></tr>
 </table>
 
 #Usage
 
 The ``nacs-dev-puppetmaster/puppet`` directory is linked to ``/etc/puppet`` on your Puppet Master. You should put your classes in the ``puppet/classes`` directory and your modules in the ``puppet/modules`` directory.
-
-You can access the Puppet Dashboard by hitting http://192.168.2.11:3000 in your web browser.
 
 #What's next?
 
