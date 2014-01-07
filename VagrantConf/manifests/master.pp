@@ -9,12 +9,21 @@ node default {
     target       => '/etc/hosts',
   }
 
+  package { 'git':
+    ensure => installed,
+  }
+
+  service { 'puppetmaster':
+    ensure => stopped,
+  }
+
   ini_setting { "puppetmaster_dns_alt_names":
     path    => '/etc/puppet/puppet.conf',
     section => 'master',
     setting => 'dns_alt_names',
     value   => 'puppet, puppet.local, puppet.nacswildcats.dev',
     ensure  => present,
+    notify  => Service['puppetmaster'],
   }
     
   file {'/etc/puppet/autosign.conf':

@@ -9,9 +9,10 @@ You will need the following packages installed to work with this:
 
 * [Vagrant](http://vagrantup.com)
 * [VirtualBox](http://www.virtualbox.org)
+* [Puppet](http://www.puppetlabs.com)
 * Ruby - If using any variance of *nix or Mac OS X this will be installd
 
-You will also need to install the librarian-puppet gem to install the needed modules for the puppet master.
+You will also need to install the librarian-puppet gem to install the needed modules for the puppet master.  If you are running Mac OS X Mavericks I would install the puppet gem.
 
 ``gem install librarian-puppet``
 

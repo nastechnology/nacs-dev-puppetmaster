@@ -23,6 +23,6 @@ apt-get update >/dev/null
 
 # Install Puppet
 echo "Installing Puppet..."
-apt-get install -y puppetmaster-passenger >/dev/null
+apt-get install -y puppetmaster >/dev/null
 
 echo "Puppet installed!"
