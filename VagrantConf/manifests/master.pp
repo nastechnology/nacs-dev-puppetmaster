@@ -54,6 +54,11 @@ node default {
     source => "/vagrant/puppet/Puppetfile",
   }
   
+  package { 'librarian-puppet':
+    ensure   => installed,
+    provider => gem,
+  }
+
   file {'/etc/puppet/modules':
     mode  => '0644',
     recurse => true,
