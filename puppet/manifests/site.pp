@@ -1,4 +1,5 @@
 import 'winbasenode.pp'
+import 'macbasenode.pp'
 import 'test.pp'
 
 if $operatingsystem == 'windows' {

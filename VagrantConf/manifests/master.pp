@@ -46,6 +46,13 @@ node default {
     group => root,
     source => "/vagrant/puppet/fileserver.conf",
   }
+
+  file { '/etc/puppet/Puppetfile':
+    ensure => link,
+    owner  => root,
+    group  => root,
+    source => "/vagrant/puppet/Puppetfile",
+  }
   
   file {'/etc/puppet/modules':
     mode  => '0644',
