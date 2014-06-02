@@ -3,4 +3,6 @@ forge "http://forge.puppetlabs.com"
   mod 'puppetlabs/apt'
   mod 'puppetlabs/stdlib'
   mod 'dhoppe/hosts'
-  mod 'cprice404/inifile'
+  mod 'puppetlabs/inifile'
+  mod 'nibalizer/puppetboard'
+  mod 'puppetlabs/apache'

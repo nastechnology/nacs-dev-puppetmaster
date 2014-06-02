@@ -1,11 +1,23 @@
 #Quick Manifest to stand up a demo Puppet Master
 
 node default {
-  
+
   host { 'puppet.nacswildcats.dev':
     ensure       => 'present',
     host_aliases => ['puppet'],
     ip           => '192.168.2.10',
+    target       => '/etc/hosts',
+  }
+
+  host { 'pdb.nacswildcats.dev':
+    ensure       => 'present',
+    ip           => '192.168.2.11',
+    target       => '/etc/hosts',
+  }
+
+  host { 'puppetdb.nacswildcats.dev':
+    ensure       => 'present',
+    ip           => '192.168.2.12',
     target       => '/etc/hosts',
   }
 
@@ -25,21 +37,21 @@ node default {
     ensure  => present,
     notify  => Service['puppetmaster'],
   }
-    
+
   file {'/etc/puppet/autosign.conf':
     ensure => link,
     owner => root,
     group => root,
     source => "/vagrant/puppet/autosign.conf",
   }
-  
+
   file {'/etc/puppet/auth.conf':
     ensure => link,
     owner => root,
     group => root,
     source => "/vagrant/puppet/auth.conf",
   }
-  
+
   file {'/etc/puppet/fileserver.conf':
     ensure => link,
     owner => root,
@@ -53,10 +65,14 @@ node default {
     group  => root,
     source => "/vagrant/puppet/Puppetfile",
   }
-  
+
   file {'/etc/puppet/modules':
     mode  => '0644',
     recurse => true,
   }
-  
+
+  class { 'puppetdb::master::config':
+    puppetdb_server => 'puppetdb',
+  }
+
 }

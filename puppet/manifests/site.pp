@@ -1,8 +1,6 @@
-import 'winbasenode.pp'
-import 'macbasenode.pp'
 import 'test.pp'
 
-if $operatingsystem == 'windows' {
+if $::operatingsystem == 'windows' {
   $sid = 'NACS'
   $serverpath = '\\nasapp\ChocoPack'
   Exec { path => [ 'C:/', 'C:/Windows/System32/', 'C:/Windows/', 'C:/Chocolatey/bin', 'C:/NACSManage' ] }

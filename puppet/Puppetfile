@@ -1,7 +1,9 @@
 forge "http://forge.puppetlabs.com"
 
  mod 'puppetlabs/stdlib'
- #mod 'puppetlabs/apache'
+ mod 'puppetlabs/apache'
+ mod 'puppetlabs/dashboard'
+ mod 'puppetlabs/puppetdb'
  mod 'puppetlabs/apt'
  mod 'puppetlabs/concat'
  mod 'puppetlabs/vcsrepo'
@@ -10,7 +12,7 @@ forge "http://forge.puppetlabs.com"
 
  mod 'mosen/cups'
  mod 'joshcooper/powershell'
- mod 'adenning/winfacts'  
+ mod 'adenning/winfacts'
  #mod 'grahamgilbert/mac_facts'
  #mod 'rcoleman/mac_profiles_handler'
  #mod 'glarizza/property_list_key'
@@ -21,19 +23,19 @@ forge "http://forge.puppetlabs.com"
 
  #mod 'dhcp',
  #  :git => 'https://github.com/nastechnology/puppet-dhcp'
- 
+
  mod 'registry',
    :git => 'https://github.com/nastechnology/puppetlabs-registry.git'
 
  #mod 'munkiclient',
  #  :git => 'https://github.com/nastechnology/munkiclient.git'
- 
+
  mod 'nacs_management',
    :git => 'https://github.com/nastechnology/nacs_management.git'
 
  mod 'git',
    :git => 'https://github.com/nastechnology/git.git'
- 
+
  mod 'setacl',
    :git => 'https://github.com/nastechnology/setacl.git'
 

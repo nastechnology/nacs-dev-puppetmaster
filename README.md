@@ -11,7 +11,7 @@ You will need the following packages installed to work with this:
 * [VirtualBox](http://www.virtualbox.org)
 * [Puppet](http://www.puppetlabs.com)
 * Ruby - If using any variance of *nix or Mac OS X this will be installd
-* [Vagrant-Windows](https://github.com/WinRB/vagrant-windows) 
+* [Vagrant-Windows](https://github.com/WinRB/vagrant-windows)
 
 To work with Windows boxes and vagrant you will need to install the Vagrant-Windows plugin using the command below:
 
@@ -26,13 +26,13 @@ You will also need to install the librarian-puppet gem to install the needed mod
 
 ## Getting Startted
 
-First you need to download the required Puppet modules - thankfully librarian-puppet will do that for you. 
+First you need to download the required Puppet modules - thankfully librarian-puppet will do that for you.
 
 ``
 cd ~/nacs-dev-puppetmaster/VagrantConf
 librarian-puppet install
 cd ../puppet
-librarian-puppet install 
+librarian-puppet install
 ``
 
 When starting the Vagrant VMs, there are some cross node dependencies, so they will need to be rebooted a few times to make sure the Puppet provisioner runs completely.
@@ -63,6 +63,8 @@ This will leave you with a fully operational Puppet setup to cut your teeth on.
 
 <table>
 <tr><th>Puppet Master</th><td>192.168.2.10</td></tr>
+<tr><th>PuppetDB</th><td>192.168.2.11</td></tr>
+<tr><th>Puppet Dashboard</th><td>192.168.2.12</td></tr>
 <tr><th>Windows Node</th><td>192.168.2.100</td></tr>
 </table>
 

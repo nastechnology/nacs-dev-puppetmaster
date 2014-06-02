@@ -1,7 +1,12 @@
-node 'xp.nas.dev' inherits 'winbasenode' {
-
+node 'xp.nas.dev' {
+  include roles
 }
 
-node 'osx.nas.dev' inherits 'macbasenode' {
+node 'osx.nas.dev' {
+  class { 'roles::teacher::nhs::art': 
+    user => '1009512',
+  }
+
+  nacs_management::tmutil { "testuser": }
 
 }
