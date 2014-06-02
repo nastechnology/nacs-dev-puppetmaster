@@ -65,6 +65,14 @@ node default {
     group  => root,
     source => "/vagrant/puppet/Puppetfile",
   }
+<<<<<<< HEAD
+=======
+  
+  package { 'librarian-puppet':
+    ensure   => installed,
+    provider => gem,
+  }
+>>>>>>> 863c74ca6dd529a722b8f118353fa09108a1d5f3
 
   file {'/etc/puppet/modules':
     mode  => '0644',

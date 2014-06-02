@@ -13,11 +13,11 @@ Vagrant.configure("2") do |config|
     master_config.vm.provision :shell, :path => "puppet_master.sh"
     master_config.vm.provider "virtualbox" do |v|
       # Advanced VM sizes - only enable if computer can handle it
-      v.customize ["modifyvm", :id, "--memory", "2048"]
-      v.customize ["modifyvm", :id, "--cpus", "2"]
+      #v.customize ["modifyvm", :id, "--memory", "2048"]
+      #v.customize ["modifyvm", :id, "--cpus", "2"]
       # Base vm sizes
-      # v.customize ["modifyvm", :id, "--memory", "512"]
-      # v.customize ["modifyvm", :id, "--cpus", "1"]
+       v.customize ["modifyvm", :id, "--memory", "512"]
+       v.customize ["modifyvm", :id, "--cpus", "1"]
     end
 
     # All Vagrant configuration is done here. The most common configuration
@@ -32,9 +32,15 @@ Vagrant.configure("2") do |config|
     # via the IP. Host-only networks can talk to the host machine as well as
     # any other machines on the same network, but cannot be accessed (through this
     # network interface) by any external networks.
+<<<<<<< HEAD
     #master_config.vm.network "public_network", :bridge => 'en4: USB Ethernet', ip: "192.168.2.10"
     master_config.vm.network "private_network", ip: "192.168.2.10"
 
+=======
+    master_config.vm.network "public_network", :bridge => 'en4: Thunderbolt Ethernet', ip: "192.168.2.10"
+    # master_config.vm.network "private_network", ip: "192.168.2.10"
+        
+>>>>>>> 863c74ca6dd529a722b8f118353fa09108a1d5f3
     # Share an additional folder to the guest VM. The first argument is
     # an identifier, the second is the path on the guest to mount the
     # folder, and the third is the path on the host to the actual folder.
@@ -62,8 +68,13 @@ Vagrant.configure("2") do |config|
     # Port forward WinRM and RDP
     windows_config.vm.network :forwarded_port, guest: 3389, host: 3389
     windows_config.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
+<<<<<<< HEAD
     #windows_config.vm.network "public_network", :bridge => 'en4: USB Ethernet', ip: "192.168.2.100"
     windows_config.vm.network :private_network, ip: "192.168.2.100"
+=======
+    windows_config.vm.network "public_network", :bridge => 'en4: Thunderbolt Ethernet', ip: "192.168.2.100"
+    #windows_condfig.vm.network "private_network", ip: "192.168.2.100"
+>>>>>>> 863c74ca6dd529a722b8f118353fa09108a1d5f3
 
     # Provider
     windows_config.vm.provider "virtualbox" do |v|
